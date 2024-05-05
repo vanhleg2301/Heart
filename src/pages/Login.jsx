@@ -3,7 +3,7 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 // import { useContext } from "react";
 // import { AuthContext } from "../context/AuthProvider";
-import { useNavigate, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export default function Login() {
   const auth = getAuth();

@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import React, { useContext } from "react";
 import { useState } from "react";
 import { AuthContext } from "../context/AuthProvider";
+import { Link, Navigate } from "react-router-dom";
 
 export default function UserMenu() {
   const {
@@ -12,10 +13,6 @@ export default function UserMenu() {
 
   const open = Boolean(anchorEl);
   // console.log({user})
-
-  const handleHeart = () => {
-    alert("let seeeeee");
-  };
 
   const handleLogout = () => {
     auth.signOut();
@@ -42,7 +39,9 @@ export default function UserMenu() {
       >
         <Avatar alt="avatar" src={photoURL} sx={{ width: 40, height: 40 }} />
         <Box>
-          <Typography variant="h2">Hi: </Typography>
+          <Typography variant="h2" color={"red"}>
+            Hi:{" "}
+          </Typography>
           <Typography variant="h4"> {displayName}</Typography>
         </Box>
       </Box>
@@ -52,7 +51,11 @@ export default function UserMenu() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleHeart}>Heart for you</MenuItem>
+        <MenuItem>
+          <Link to="/heart" style={{ textDecoration: "none", color: "red" }}>
+            Heart for my honey
+          </Link>
+        </MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </>
