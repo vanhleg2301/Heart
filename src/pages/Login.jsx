@@ -4,6 +4,7 @@ import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 // import { useContext } from "react";
 // import { AuthContext } from "../context/AuthProvider";
 import { Navigate } from "react-router-dom";
+import { FacebookAuthProvider } from "firebase/auth/cordova";
 
 export default function Login() {
   const auth = getAuth();
@@ -12,9 +13,16 @@ export default function Login() {
   const handleLoginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
 
-    const { user } = await signInWithPopup(auth, provider);
+    const res = await signInWithPopup(auth, provider);
 
-    console.log("register", { user });
+    console.log("register", { res });
+  };
+  const handleLoginWithFacebook = async () => {
+    const provider = new FacebookAuthProvider();
+
+    const res = await signInWithPopup(auth, provider);
+
+    console.log("register", { res });
   };
 
   if (localStorage.getItem("accessToken")) {
@@ -45,7 +53,7 @@ export default function Login() {
         <br />
         <Button
           variant="outlined"
-          onClick={handleLoginWithGoogle}
+          onClick={handleLoginWithFacebook}
           sx={{
             width: "50%",
             marginTop: "10px",
