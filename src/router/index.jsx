@@ -6,6 +6,7 @@ import AuthProvider from "../context/AuthProvider";
 import ProtectedRoute from "./ProtectedRoute";
 import { Outlet, createBrowserRouter } from "react-router-dom";
 import HeartPages from "../pages/HeartPages";
+import QuynhPage from "../pages/QuynhPage";
 
 const AuthLayout = () => {
   return (
@@ -34,6 +35,10 @@ export default createBrowserRouter([
           {
             element: <HeartPages />,
             path: "/heart",
+          },
+          {
+            element: <QuynhPage />,
+            path: "/quynh",
           },
         ],
       },

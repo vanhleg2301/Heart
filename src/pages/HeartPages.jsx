@@ -1,10 +1,10 @@
 import React from "react";
-import Heart from "../component/Heart";
+import HeartBeta from "../component/HeartBeta/HeartBeta";
 
 export default function HeartPages() {
   return (
     <>
-      <Heart />
+      <HeartBeta />
     </>
   );
 }

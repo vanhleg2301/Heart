@@ -39,10 +39,13 @@ export default function UserMenu() {
       >
         <Avatar alt="avatar" src={photoURL} sx={{ width: 40, height: 40 }} />
         <Box>
-          <Typography variant="h2" color={"red"}>
-            Hi:{" "}
+          <Typography variant="h2" color={"hotpink"}>
+            Hi:
           </Typography>
-          <Typography variant="h4"> {displayName}</Typography>
+          <Typography variant="h4" color={"hotpink"}>
+            {" "}
+            {displayName}
+          </Typography>
         </Box>
       </Box>
       <Menu
@@ -52,7 +55,10 @@ export default function UserMenu() {
         onClose={handleClose}
       >
         <MenuItem>
-          <Link to="/heart" style={{ textDecoration: "none", color: "red" }}>
+          <Link
+            to="/heart"
+            style={{ textDecoration: "none", color: "hotpink" }}
+          >
             Heart for my honey
           </Link>
         </MenuItem>
