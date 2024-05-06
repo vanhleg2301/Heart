@@ -27,7 +27,7 @@ export default function HeartBeta() {
     setHeartPosition({ x: newX, y: newY });
 
     // Check if the click count reaches 5
-    if (newCount === 7) {
+    if (newCount === 1) {
       // Reset click count
       setClickCount(0);
       // Show alert

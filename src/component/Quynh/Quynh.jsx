@@ -1,154 +1,144 @@
-import React, { useState, useEffect } from "react";
-import { Box, Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Button, Container, Grid } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom"; // Thêm dòng này
 import "./Quynh.css";
-import { useNavigate } from "react-router-dom";
 
 const img = [
-  "../../../public/q1.jpg",
-  "../../../public/q2.jpg",
-  "../../../public/q3.jpg",
-  "../../../public/q4.jpg",
-  "../../../public/v.jpg",
+  "q1.jpg",
+  "q2.jpg",
+  "q3.jpg",
+  "q4.jpg",
+  "q5.PNG",
+  "q6.PNG",
+  "q7.JPG",
+  "q8.JPG",
+  "q9.jpg",
+  "q10.JPG",
+  "q11.JPG",
+  "q12.jpg",
+  "q13.jpg",
+  "q14.JPG",
+  "q15.PNG",
+  "q16.JPG",
+  "q17.jpg",
+  "q18.jpg",
+  "q19.jpg",
+  "q20.JPG",
+  "q21.JPG",
+  "q22.JPG",
+  "q23.JPG",
+  "q24.JPG",
+  "q25.JPG",
+  "q26.JPG",
+  "q27.JPG",
+  "q28.JPG",
+  "q27.JPG",
+  "qq29.JPG",
+  "q30.JPG",
+  "q31.JPG",
+  "q32.JPG",
+  "q33.jpg",
+  "q34.JPG",
+  "q35.JPG",
+  "q36.JPG",
+  "q37.JPG",
+  "q38.JPG",
+  "q39.JPG",
+  "q40.JPG",
+  "q41.JPG",
+  "q42.PNG",
+  "q43.jpg",
+  "q44.JPG",
+  "q45.jpg",
+  "q46.JPG",
+  "q47.JPG",
+  "q48.JPG",
+  "v.jpg",
+  "v1.PNG",
 ];
 
 export default function Quynh() {
-  const navigate = useNavigate();
-  const [images, setImages] = useState([]);
-  const [displayedImages, setDisplayedImages] = useState([]);
+  const [images, setImages] = useState(() => {
+    const savedImages = JSON.parse(localStorage.getItem("savedImages"));
+    return savedImages || [];
+  });
   const [allImagesDisplayed, setAllImagesDisplayed] = useState(false);
+  const imageWidth = 100;
+  const maxWidth = 1500;
 
   const handleClick = () => {
     if (allImagesDisplayed) {
       alert("Bye Bye bé iu");
-      navigate("/heart");
       return;
     }
 
-    // Randomly select an image from the img array that hasn't been displayed yet
-    let randomIndex;
-    do {
-      randomIndex = Math.floor(Math.random() * img.length);
-    } while (displayedImages.includes(randomIndex));
+    const selectedImgIndex = images.length;
+    const selectedImgSrc = img[selectedImgIndex];
 
-    const selectedImgSrc = img[randomIndex];
+    const rowNum = Math.floor(selectedImgIndex / (maxWidth / imageWidth));
+    const colNum = selectedImgIndex % (maxWidth / imageWidth);
 
-    // Generate random position
-    let x, y;
-    do {
-      x = Math.random() * window.innerWidth;
-      y = Math.random() * window.innerHeight;
-    } while (
-      // Ensure the image position does not overlap the button
-      x > window.innerWidth / 2 - 100 && // Adjust 100 for the button's width
-      x < window.innerWidth / 2 + 100 && // Adjust 100 for the button's width
-      y > window.innerHeight / 2 - 50 && // Adjust 50 for the button's height
-      y < window.innerHeight / 2 + 50 // Adjust 50 for the button's height
-    );
+    const x = colNum * (imageWidth + 10);
+    const y = rowNum * (imageWidth + 10);
 
-    // Add the new image to the state
-    setImages([...images, { src: selectedImgSrc, x, y }]);
-    setDisplayedImages([...displayedImages, randomIndex]);
+    const newImages = [...images, { src: selectedImgSrc, x, y }];
+    setImages(newImages);
+    localStorage.setItem("savedImages", JSON.stringify(newImages));
   };
 
   useEffect(() => {
-    if (displayedImages.length === img.length) {
+    if (images.length === img.length) {
       setAllImagesDisplayed(true);
     }
-  }, [displayedImages]);
+  }, [images]);
 
   return (
     <>
-      <Box>
-        <Button
-          onClick={handleClick}
-          style={{ position: "relative", zIndex: 1 }}
-        >
-          Click here
-        </Button>
-      </Box>
-      {/* Render images */}
-      {images.map((image, index) => (
-        <img
-          key={index}
-          src={image.src}
-          alt={`Image ${index}`}
-          style={{
-            position: "absolute",
-            left: image.x + "px",
-            top: image.y + "px",
-            width: "100px",
-            height: "auto",
-          }}
-        />
-      ))}
+      <Container maxWidth="lg">
+        <Grid container spacing={1}>
+          <Grid item md={12} sx={{ display: "flex", justifyContent: "center" }}>
+            <Button onClick={handleClick} style={{ zIndex: 9999 }}>
+              Show Image
+            </Button>
+          </Grid>
+
+          <Grid item md={1}></Grid>
+          <Grid
+            item
+            md={10}
+            sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+          >
+            {images.map((image, index) => (
+              <Box
+                sx={{
+                  margin: "5px",
+                  width: imageWidth + "px",
+                  flexShrink: 0,
+                }}
+                key={index}
+                title={`${index + 1}`}
+              >
+                <Link to={`/quynh/${index}`}>
+                  <img
+                    key={index}
+                    src={image.src}
+                    alt={`Image ${index}`}
+                    style={{
+                      left: image.x + "px",
+                      top: image.y + "px",
+                      width: imageWidth + "px",
+                      height: "auto",
+                      border: "5px solid #ddd",
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.8)",
+                    }}
+                  />
+                </Link>
+              </Box>
+            ))}
+          </Grid>
+          <Grid item md={1}></Grid>
+        </Grid>
+      </Container>
     </>
   );
 }
-
-// Hiển thị rất nhiều
-// import React, { useState } from "react";
-// import { Box, Button } from "@mui/material";
-// import "./Quynh.css";
-
-// const img = [
-//   "../../../public/q1.jpg",
-//   "../../../public/q2.jpg",
-//   "../../../public/q3.jpg",
-//   "../../../public/q4.jpg",
-//   "../../../public/v.jpg",
-//   "../../../public/v1.jpg",
-// ];
-
-// export default function Quynh() {
-//   const [images, setImages] = useState([]);
-
-//   const handleClick = () => {
-//     // Randomly select an image from the img array
-//     const randomIndex = Math.floor(Math.random() * img.length);
-//     const selectedImgSrc = img[randomIndex];
-
-//     // Generate random position
-//     let x, y;
-//     do {
-//       x = Math.random() * window.innerWidth;
-//       y = Math.random() * window.innerHeight;
-//     } while (
-//       // Ensure the image position does not overlap the button
-//       x > window.innerWidth / 2 - 100 && // Adjust 100 for the button's width
-//       x < window.innerWidth / 2 + 100 && // Adjust 100 for the button's width
-//       y > window.innerHeight / 2 - 50 && // Adjust 50 for the button's height
-//       y < window.innerHeight / 2 + 50 // Adjust 50 for the button's height
-//     );
-
-//     // Add the new image to the state
-//     setImages([...images, { src: selectedImgSrc, x, y }]);
-//   };
-
-//   return (
-//     <>
-//       <Box>
-//         <Button
-//           onClick={handleClick}
-//           style={{ position: "relative", zIndex: 1 }}
-//         >
-//           Click here
-//         </Button>
-//       </Box>
-//       {/* Render images */}
-//       {images.map((image, index) => (
-//         <img
-//           key={index}
-//           src={image.src}
-//           alt={`Image ${index}`}
-//           style={{
-//             position: "absolute",
-//             left: image.x + "px",
-//             top: image.y + "px",
-//             width: "100px",
-//             height: "auto",
-//           }}
-//         />
-//       ))}
-//     </>
-//   );
-// }
